@@ -23,3 +23,33 @@ struct Country: Codable {
         let flag: String
     }
 }
+
+extension Country: Persistable {
+    
+    public init(managedObject: CountryObject) {
+        name = managedObject.name
+        continent = managedObject.continent
+        capital = managedObject.capital
+        population = managedObject.population
+        description_small = managedObject.smallDescription
+        description = managedObject.countryDescription
+        image = managedObject.imageURL
+        country_info = CountryInfo.init(images: (managedObject.imagesURLs?.values)!, flag: managedObject.flagURL)
+    }
+    
+    public func managedObject() -> CountryObject {
+        let country = CountryObject()
+        
+        country.name = name
+        country.continent = continent
+        country.capital = capital
+        country.population = population
+        country.smallDescription = description_small
+        country.countryDescription = description
+        country.imageURL = image
+        country.imagesURLs = ImagesURLs.init(values: country_info.images)
+        country.flagURL = country_info.flag
+        
+        return country
+    }
+}

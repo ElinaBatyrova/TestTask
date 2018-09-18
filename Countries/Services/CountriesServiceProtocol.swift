@@ -9,5 +9,5 @@
 import Foundation
 
 protocol CountriesServiceProtocol: class {
-    func getCountriesList(with request: Request, onSuccess: @escaping (CountriesList) -> Void, onFailure: @escaping (LoadError?) -> Void)
+    func getCountriesList(with request: Request, onSuccess: @escaping (FetchedResults<Country>) -> Void, onFailure: @escaping (LoadError?) -> Void)
 }

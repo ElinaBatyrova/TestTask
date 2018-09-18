@@ -11,13 +11,15 @@ import Foundation
 class CountriesService: CountriesServiceProtocol {
     
     var apiProvider: ApiProvider!
+    var container: Container!
     let errorMessage = "Ошибка при загрузке данных."
     
     init() {
         self.apiProvider = CountriesListApiProvider()
+        self.container = try! Container()
     }
 
-    func getCountriesList(with request: Request, onSuccess: @escaping (CountriesList) -> Void, onFailure: @escaping (LoadError?) -> Void) {
+    func getCountriesList(with request: Request, onSuccess: @escaping (FetchedResults<Country>) -> Void, onFailure: @escaping (LoadError?) -> Void) {
         self.apiProvider.makeRequest(with: request, onSuccess: { [weak self] (data) in
             guard let strongSelf = self else { return }
             
@@ -31,7 +33,15 @@ class CountriesService: CountriesServiceProtocol {
                 return
             }
             
-            onSuccess(countriesList)
+            for country in countriesList.countries {
+                try! strongSelf.container.write({ (transaction) in
+                    transaction.add(country, update: true)
+                })
+            }
+            
+            let results = strongSelf.container.values(Country.self)
+            
+            onSuccess(results)
         }) { [weak self] (error) in
             guard let strongSelf = self else { return }
             
