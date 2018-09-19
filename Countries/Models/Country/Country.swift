@@ -34,7 +34,7 @@ extension Country: Persistable {
         description_small = managedObject.smallDescription
         description = managedObject.countryDescription
         image = managedObject.imageURL
-        country_info = CountryInfo.init(images: (managedObject.imagesURLs?.values)!, flag: managedObject.flagURL)
+        country_info = CountryInfo.init(images: managedObject.imagesURLs.values, flag: managedObject.flagURL)
     }
     
     public func managedObject() -> CountryObject {

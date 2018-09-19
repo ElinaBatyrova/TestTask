@@ -19,7 +19,7 @@ class CountriesService: CountriesServiceProtocol {
         self.container = try! Container()
     }
 
-    func getCountriesList(with request: Request, onSuccess: @escaping (FetchedResults<Country>) -> Void, onFailure: @escaping (LoadError?) -> Void) {
+    func getCountriesList(with request: Request, onSuccess: @escaping ([CountryObject]) -> Void, onFailure: @escaping (LoadError?) -> Void) {
         self.apiProvider.makeRequest(with: request, onSuccess: { [weak self] (data) in
             guard let strongSelf = self else { return }
             
@@ -41,7 +41,13 @@ class CountriesService: CountriesServiceProtocol {
             
             let results = strongSelf.container.values(Country.self)
             
-            onSuccess(results)
+            var countriesObjects: [CountryObject] = []
+            
+            for i in 0..<results.count {
+                countriesObjects.append(results.value(at: i).managedObject())
+            }
+            
+            onSuccess(countriesObjects)
         }) { [weak self] (error) in
             guard let strongSelf = self else { return }
             
