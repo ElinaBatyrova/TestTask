@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct Country: Codable {
     let name: String
@@ -34,7 +35,7 @@ extension Country: Persistable {
         description_small = managedObject.smallDescription
         description = managedObject.countryDescription
         image = managedObject.imageURL
-        country_info = CountryInfo.init(images: managedObject.imagesURLs.values, flag: managedObject.flagURL)
+        country_info = CountryInfo.init(images: Array(managedObject.imagesURLs), flag: managedObject.flagURL)
     }
     
     public func managedObject() -> CountryObject {
@@ -47,7 +48,11 @@ extension Country: Persistable {
         country.smallDescription = description_small
         country.countryDescription = description
         country.imageURL = image
-        country.imagesURLs = ImagesURLs.init(values: country_info.images)
+        let images = List<String>()
+        for image in country_info.images {
+            images.append(image)
+        }
+        country.imagesURLs = images
         country.flagURL = country_info.flag
         
         return country

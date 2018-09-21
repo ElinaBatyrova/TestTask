@@ -17,7 +17,7 @@ final class CountryObject: Object {
     @objc dynamic var smallDescription = ""
     @objc dynamic var countryDescription = ""
     @objc dynamic var imageURL = ""
-    var imagesURLs: ImagesURLs = ImagesURLs(values: [""])
+    var imagesURLs: List<String> = List<String>()
     @objc dynamic var flagURL = ""
     
     override static func primaryKey() -> String? {
