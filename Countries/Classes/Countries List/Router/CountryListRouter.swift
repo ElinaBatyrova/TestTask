@@ -24,18 +24,18 @@ final class CountryListRouter: NSObject, CountryListRoutingLogic, CountryListDat
     func routeToDetailCountry(segue: UIStoryboardSegue?, selectedRow: Int) {
         if let destinationVC = segue?.destination as? DetailCountryViewController {
             var destinationDS = destinationVC.router!.dataStore!
-            self.passDataToDetailCountry(source: self.dataStore!, destination: &destinationDS)
-            self.navigateToDetailView(source: self.viewController!, destination: destinationVC)
+            self.passDataToDetailCountry(source: self.dataStore!, destination: &destinationDS, selectedRow: selectedRow)
+//            self.navigateToDetailView(source: self.viewController!, destination: destinationVC)
         }
     }
     
-    func navigateToDetailView(source: CountryListViewController, destination: DetailCountryViewController) {
-        source.show(destination, sender: nil)
-    }
+//    func navigateToDetailView(source: CountryListViewController, destination: DetailCountryViewController) {
+//        source.show(destination, sender: nil)
+//    }
     
-    func passDataToDetailCountry(source: CountryListDataStore, destination: inout DetailCountryDataStore) {
-        if let selectedRow = viewController?.tableView.indexPathForSelectedRow?.row {
+    func passDataToDetailCountry(source: CountryListDataStore, destination: inout DetailCountryDataStore, selectedRow: Int) {
+//        if let selectedRow = viewController?.tableView.indexPathForSelectedRow?.row {
             destination.country = source.countries?[selectedRow]
-        }
+//        }
     }
 }

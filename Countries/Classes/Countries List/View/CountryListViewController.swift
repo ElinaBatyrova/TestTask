@@ -95,8 +95,8 @@ class CountryListViewController: UIViewController, CountryListDisplayLogic {
 //                viewController.country = country
 //            }
             
-            if let router = self.router {
-                router.routeToDetailCountry(segue: segue)
+            if let router = self.router, let selectedRow = sender as? Int {
+                router.routeToDetailCountry(segue: segue, selectedRow: selectedRow)
             }
         }
     }
@@ -121,6 +121,6 @@ extension CountryListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        performSegue(withIdentifier: Constants.segueIdentifier, sender: nil)
+        performSegue(withIdentifier: Constants.segueIdentifier, sender: indexPath.row)
     }
 }

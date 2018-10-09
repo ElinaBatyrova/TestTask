@@ -77,11 +77,11 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic {
         HUD.show(.progress)
         self.interactor?.setUpViewWithCountry()
     }
-    
 
     func displayCountry(viewModel: DetailCountry.ViewModel) {
         HUD.flash(.success, delay: 1.0)
         self.images = viewModel.images
+        self.imagesCollectionView.reloadData()
     }
     
 //    func loadImages() {

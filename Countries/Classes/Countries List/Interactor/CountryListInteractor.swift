@@ -27,6 +27,7 @@ class CountryListInteractor: CountryListBusinessLogic, CountryListDataStore {
         
         self.worker?.getCountries(onSuccess: { [weak self] (countries, loadedImages) in
             guard let strongSelf = self else { return }
+            self?.countries = countries
             
             let response = CountryList.Response(countries: countries, loadedFlagImages: loadedImages)
             
