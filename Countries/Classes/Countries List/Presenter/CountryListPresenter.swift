@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol CountryListPresentationLogic {
+protocol CountryListPresentationLogic: AnyObject {
     func presentCountries(response: CountryList.Response)
 }
 
@@ -22,7 +22,7 @@ final class CountryListPresenter: CountryListPresentationLogic {
         for i in 0..<response.countries.count {
             let country = response.countries[i]
             let flagImage = response.loadedFlagImages[i]
-            let displayedCountry = CountryList.ViewModel.DisplayedCountry(name: country.name, capital: country.capital, flag: flagImage, description: country.smallDescription)
+            let displayedCountry = CountryList.ViewModel.DisplayedCountry(uid: i, name: country.name, capital: country.capital, flag: flagImage, description: country.smallDescription)
             viewModel.displayedCountries.append(displayedCountry)
         }
         

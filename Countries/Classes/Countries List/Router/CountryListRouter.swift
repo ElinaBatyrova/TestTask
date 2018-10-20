@@ -9,8 +9,9 @@
 import Foundation
 import UIKit
 
-protocol CountryListRoutingLogic {
-    func routeToDetailCountry(segue: UIStoryboardSegue?, selectedRow: Int)
+protocol CountryListRoutingLogic: AnyObject {
+    func prepareFor(segue: UIStoryboardSegue, sender: Any?)
+    func openCountryDetails(countryId: UniqueIdentifier)
 }
 
 protocol CountryListDataPassing {
@@ -18,24 +19,23 @@ protocol CountryListDataPassing {
 }
 
 final class CountryListRouter: NSObject, CountryListRoutingLogic, CountryListDataPassing {
+    
+    fileprivate enum Constants {
+        static let segueIdentifier = "toDetailVC"
+    }
+    
     weak var viewController: CountryListViewController?
     var dataStore: CountryListDataStore?
     
-    func routeToDetailCountry(segue: UIStoryboardSegue?, selectedRow: Int) {
-        if let destinationVC = segue?.destination as? DetailCountryViewController {
-            var destinationDS = destinationVC.router!.dataStore!
-            self.passDataToDetailCountry(source: self.dataStore!, destination: &destinationDS, selectedRow: selectedRow)
-//            self.navigateToDetailView(source: self.viewController!, destination: destinationVC)
+    func openCountryDetails(countryId: UniqueIdentifier) {
+        if let dataStore = self.dataStore, let country = dataStore.countries?[countryId] {
+            self.viewController?.performSegue(withIdentifier: Constants.segueIdentifier, sender: country)
         }
     }
     
-//    func navigateToDetailView(source: CountryListViewController, destination: DetailCountryViewController) {
-//        source.show(destination, sender: nil)
-//    }
-    
-    func passDataToDetailCountry(source: CountryListDataStore, destination: inout DetailCountryDataStore, selectedRow: Int) {
-//        if let selectedRow = viewController?.tableView.indexPathForSelectedRow?.row {
-            destination.country = source.countries?[selectedRow]
-//        }
+    func prepareFor(segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? ConfigurableViewProtocol {
+            destination.configure(with: sender)
+        }
     }
 }

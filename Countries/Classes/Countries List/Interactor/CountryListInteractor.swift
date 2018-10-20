@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol CountryListBusinessLogic {
-    func setUpViewWithCountries()
+protocol CountryListBusinessLogic: AnyObject {
+    func fetchCountries(request: CountryList.Request)
 }
 
-protocol CountryListDataStore {
+protocol CountryListDataStore: AnyObject {
     var countries: [CountryObject]? { get }
 }
 
@@ -23,8 +23,7 @@ class CountryListInteractor: CountryListBusinessLogic, CountryListDataStore {
     
     var countries: [CountryObject]?
     
-    func setUpViewWithCountries() {
-        
+    func fetchCountries(request: CountryList.Request) {
         self.worker?.getCountries(onSuccess: { [weak self] (countries, loadedImages) in
             guard let strongSelf = self else { return }
             self?.countries = countries
@@ -32,9 +31,9 @@ class CountryListInteractor: CountryListBusinessLogic, CountryListDataStore {
             let response = CountryList.Response(countries: countries, loadedFlagImages: loadedImages)
             
             strongSelf.presenter?.presentCountries(response: response)
-        }, onFailure: { [weak self] (error) in
-            guard let strongSelf = self else { return }
-//            TODO
+            }, onFailure: { [weak self] (error) in
+                guard let strongSelf = self else { return }
+                //            TODO
         })
     }
 }

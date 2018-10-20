@@ -13,18 +13,18 @@ protocol DetailCountryDisplayLogic: class {
     func displayCountry(viewModel: DetailCountry.ViewModel)
 }
 
-class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic {
+class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, ConfigurableViewProtocol {
     
     var interactor: DetailCountryBusinessLogic?
     var router: (DetailCountryRoutingLogic & DetailCountryDataPassing)?
+    
+    var collectionViewDataSource: DetailCountryCollectionViewDataSource?
     
     @IBOutlet weak var collectionViewContainerView: UIView!
     @IBOutlet weak var imagesCollectionView: UICollectionView!
     @IBOutlet weak var pageControl: UIPageControl!
     
-    var images: [UIImage?] = []
-    
-    var country: CountryObject!
+    var images: [UIImage] = []
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -42,8 +42,10 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic {
         let presenter = DetailCountryPresenter()
         let router = DetailCountryRouter()
         let worker = DetailCountryWorker()
+        let collectionViewDataSource = DetailCountryCollectionViewDataSource()
         viewController.interactor = interactor
         viewController.router = router
+        viewController.collectionViewDataSource = collectionViewDataSource
         interactor.presenter = presenter
         interactor.worker = worker
         presenter.viewController = viewController
@@ -55,17 +57,22 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic {
         super.viewDidLoad()
         
         self.setupNavigationBar()
-//        self.loadImages()
         self.setUpView()
         
-        
         self.imagesCollectionView.register(UINib(nibName: "ImageCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ImageCollectionViewCell")
+        self.imagesCollectionView.dataSource = self.collectionViewDataSource
+        self.imagesCollectionView.delegate = self
         
-        self.pageControl.numberOfPages = self.images.count
+        
         self.pageControl.currentPage = 0
+        
         self.collectionViewContainerView.bringSubview(toFront: self.pageControl)
     }
 
+    func configure(with object: Any?) {
+        self.interactor?.configureBusinessLogic(with: object)
+    }
+    
     func setupNavigationBar() {
         self.navigationController?.navigationBar.backgroundColor = UIColor.clear
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -79,34 +86,17 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic {
     }
 
     func displayCountry(viewModel: DetailCountry.ViewModel) {
+        
         HUD.flash(.success, delay: 1.0)
+        
         self.images = viewModel.images
+        self.pageControl.numberOfPages = images.count
+        self.collectionViewDataSource?.displayedCountry = viewModel
         self.imagesCollectionView.reloadData()
     }
-    
-//    func loadImages() {
-//        for imageStringURL in country.imagesURLs {
-//            let imageView = UIImageView()
-//
-//            imageView.sd_setImage(with: URL(string: imageStringURL), completed: nil)
-//            self.images.append(imageView)
-//        }
-//    }
 }
 
-extension DetailCountryViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.images.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
-        if let image = self.images[indexPath.row] {
-            cell.prepareCell(with: image)
-        }
-        return cell
-    }
+extension DetailCountryViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)

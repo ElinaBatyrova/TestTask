@@ -10,6 +10,7 @@ import Foundation
 
 protocol DetailCountryBusinessLogic {
     func setUpViewWithCountry()
+    func configureBusinessLogic(with object: Any?)
 }
 
 protocol DetailCountryDataStore {
@@ -33,12 +34,19 @@ final class DetailCountryInteractor: DetailCountryBusinessLogic, DetailCountryDa
         
         self.worker.getImages(from: imagesURLs, onSuccess: { (images) in
             
-            if let presenter = self.presenter {
-                presenter.present(images: images)
+            if let presenter = self.presenter, let country = self.country {
+                let countryResponse = DetailCountry.Response(country: country, loadedImages: images)
+                
+                presenter.presentCountry(response: countryResponse)
             }
-            
         }) { (error) in
 //            TODO
+        }
+    }
+    
+    func configureBusinessLogic(with object: Any?) {
+        if let country = object as? CountryObject {
+            self.country = country
         }
     }
 }

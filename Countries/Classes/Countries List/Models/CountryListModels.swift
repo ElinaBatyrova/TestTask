@@ -11,14 +11,17 @@ import UIKit
 
 enum CountryList {
     
+    struct Request {
+    }
+    
     struct Response {
         var countries: [CountryObject]
         var loadedFlagImages: [UIImage?]
     }
     
     struct ViewModel {
-        
         struct DisplayedCountry {
+            let uid: UniqueIdentifier
             let name: String
             let capital: String
             let flag: UIImage?

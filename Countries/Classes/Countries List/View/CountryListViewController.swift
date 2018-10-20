@@ -9,24 +9,20 @@
 import UIKit
 import PKHUD
 
-protocol CountryListDisplayLogic: class {
-    func displayCountries(viewModel: CountryList.ViewModel)
-}
-
 class CountryListViewController: UIViewController, CountryListDisplayLogic {
     
     fileprivate enum Constants {
         static let tableCellName = "CountryTableViewCell"
-        static let segueIdentifier = "toDetailVC"
+//        static let segueIdentifier = "toDetailVC"
     }
     
     var interactor: CountryListBusinessLogic?
-    var router: (CountryListRoutingLogic & CountryListDataPassing)?
+    var router: CountryListRoutingLogic?
+    
+    var tableViewDataSource: CountryListTableViewDataSource?
+    var tableViewDelegate: CountryListTableViewDelegate?
 
     @IBOutlet weak var tableView: UITableView!
-    
-    var dispayedCountries = [CountryList.ViewModel.DisplayedCountry]()
-    
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -44,13 +40,18 @@ class CountryListViewController: UIViewController, CountryListDisplayLogic {
         let presenter = CountryListPresenter()
         let router = CountryListRouter()
         let worker = CountryListWorker()
+        let tableViewDataSource = CountryListTableViewDataSource()
+        let tableViewDelegate = CountryListTableViewDelegate()
         viewController.interactor = interactor
         viewController.router = router
+        viewController.tableViewDataSource = tableViewDataSource
+        viewController.tableViewDelegate = tableViewDelegate
         interactor.presenter = presenter
         interactor.worker = worker
         presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
+        tableViewDelegate.delegate = router
     }
     
     override func viewDidLoad() {
@@ -63,9 +64,13 @@ class CountryListViewController: UIViewController, CountryListDisplayLogic {
         self.setupNavigationBar()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        self.router?.prepareFor(segue: segue, sender: sender)
+    }
+    
     func setupTableView() {
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+        self.tableView.delegate = self.tableViewDelegate
+        self.tableView.dataSource = self.tableViewDataSource
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 250;
         self.tableView.register(UINib(nibName: Constants.tableCellName, bundle: nil), forCellReuseIdentifier: Constants.tableCellName)
@@ -79,48 +84,14 @@ class CountryListViewController: UIViewController, CountryListDisplayLogic {
     
     func setUpView() {
         HUD.show(.progress)
-        self.interactor?.setUpViewWithCountries()
+        let request = CountryList.Request()
+        self.interactor?.fetchCountries(request: request)
     }
     
     func displayCountries(viewModel: CountryList.ViewModel) {
-        self.dispayedCountries = viewModel.displayedCountries
+        self.tableViewDelegate?.dispayedCountries = viewModel.displayedCountries
+        self.tableViewDataSource?.dispayedCountries = viewModel.displayedCountries
         self.tableView.reloadData()
         HUD.flash(.success, delay: 1.0)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == Constants.segueIdentifier {
-//            if let viewController = segue.destination as? DetailCountryViewController, let country = sender as? CountryObject {
-//                viewController.country = country
-//            }
-            
-            if let router = self.router, let selectedRow = sender as? Int {
-                router.routeToDetailCountry(segue: segue, selectedRow: selectedRow)
-            }
-        }
-    }
-}
-
-extension CountryListViewController: UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dispayedCountries.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.tableCellName, for: indexPath) as! CountryTableViewCell
-        
-        cell.prepare(with: self.dispayedCountries[indexPath.row])
-        
-        return cell
-    }
-}
-
-extension CountryListViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        performSegue(withIdentifier: Constants.segueIdentifier, sender: indexPath.row)
     }
 }

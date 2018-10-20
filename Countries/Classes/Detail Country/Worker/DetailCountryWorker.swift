@@ -11,8 +11,8 @@ import SDWebImage
 
 final class DetailCountryWorker {
     
-    func getImages(from urls: [String], onSuccess: @escaping ([UIImage?]) -> Void, onFailure: @escaping (LoadError?) -> Void) {
-        var loadedImages: [UIImage?] = []
+    func getImages(from urls: [String], onSuccess: @escaping ([UIImage]) -> Void, onFailure: @escaping (LoadError?) -> Void) {
+        var loadedImages: [UIImage] = []
         
         let dispatchGroup = DispatchGroup()
         
@@ -20,7 +20,10 @@ final class DetailCountryWorker {
             dispatchGroup.enter()
             SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: imageStringURL), options: [], progress: nil, completed: { (image, data, error, finished) in
                 
-                loadedImages.append(image)
+                if let image = image {
+                   loadedImages.append(image)
+                }
+                
                 dispatchGroup.leave()
             })
         }
