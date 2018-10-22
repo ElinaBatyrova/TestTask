@@ -13,7 +13,7 @@ class DetailCountryPresenter: DetailCountryPresentationLogic {
     weak var viewController: DetailCountryDisplayLogic?
     
     func presentCountry(response: DetailCountry.Response) {
-        let viewModel = DetailCountry.ViewModel(images: response.loadedImages)
+        let viewModel = DetailCountry.ViewModel(images: response.loadedImages, countryName: response.country.name)
         
         self.viewController?.displayCountry(viewModel: viewModel)
     }

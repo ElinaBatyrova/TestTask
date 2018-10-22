@@ -20,5 +20,6 @@ enum DetailCountry {
     
     struct ViewModel {
         let images: [UIImage]
+        let countryName: String
     }
 }
