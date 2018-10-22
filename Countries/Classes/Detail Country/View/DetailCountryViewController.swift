@@ -130,11 +130,14 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
     }
     
     func displayError(with message: String?) {
+        HUD.flash(.error, delay: 1.0)
+        
         let alert = UIAlertController(title: "Error", message: (message != nil) ? message : "Something went wrong", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         
         self.present(alert, animated: true, completion: nil)
+        self.setupNoAnimationState()
     }
     
     private func animateTransitionIfNeeded(to state: State, duration: TimeInterval) {
