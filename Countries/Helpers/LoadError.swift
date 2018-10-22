@@ -8,6 +8,6 @@
 
 import Foundation
 
-enum LoadError {
-    case error(String)
+struct LoadError {
+    let message: String
 }

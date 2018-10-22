@@ -8,14 +8,6 @@
 
 import Foundation
 
-protocol CountryListBusinessLogic: AnyObject {
-    func fetchCountries(request: CountryList.Request)
-}
-
-protocol CountryListDataStore: AnyObject {
-    var countries: [CountryObject]? { get }
-}
-
 class CountryListInteractor: CountryListBusinessLogic, CountryListDataStore {
     
     var presenter: CountryListPresentationLogic?

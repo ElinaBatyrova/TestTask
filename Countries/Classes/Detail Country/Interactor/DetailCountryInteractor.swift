@@ -8,15 +8,6 @@
 
 import Foundation
 
-protocol DetailCountryBusinessLogic {
-    func setUpViewWithCountry()
-    func configureBusinessLogic(with object: Any?)
-}
-
-protocol DetailCountryDataStore {
-    var country: CountryObject? { get set }
-}
-
 final class DetailCountryInteractor: DetailCountryBusinessLogic, DetailCountryDataStore {
     
     var presenter: DetailCountryPresentationLogic?
@@ -39,8 +30,10 @@ final class DetailCountryInteractor: DetailCountryBusinessLogic, DetailCountryDa
                 
                 presenter.presentCountry(response: countryResponse)
             }
-        }) { (error) in
-//            TODO
+        }) { [weak self] (error) in
+            guard let strongSelf = self else { return }
+            
+            strongSelf.presenter?.presentError(with: error?.message)
         }
     }
     

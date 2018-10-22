@@ -12,24 +12,31 @@ class CountriesService: CountriesServiceProtocol {
     
     var apiProvider: ApiProvider!
     var container: Container!
-    let errorMessage = "Ошибка при загрузке данных."
+    
+    fileprivate enum Constants {
+        static let errorMessage = "Ошибка при загрузке данных."
+        static let endpoint = "https://rawgit.com/NikitaAsabin/799e4502c9fc3e0ea7af439b2dfd88fa/raw/7f5c6c66358501f72fada21e04d75f64474a7888/page1.json"
+    }
     
     init() {
         self.apiProvider = CountriesListApiProvider()
         self.container = try! Container()
     }
 
-    func getCountriesList(with request: Request, onSuccess: @escaping ([CountryObject]) -> Void, onFailure: @escaping (LoadError?) -> Void) {
+    func getCountriesList(onSuccess: @escaping ([CountryObject]) -> Void, onFailure: @escaping (LoadError?) -> Void) {
+        
+        let request = GetCountriesListRequest(endpoint: Constants.endpoint)
+        
         self.apiProvider.makeRequest(with: request, onSuccess: { [weak self] (data) in
             guard let strongSelf = self else { return }
             
             guard let data = data else {
-                onFailure(.error(strongSelf.errorMessage))
+                onFailure(LoadError(message: Constants.errorMessage))
                 return
             }
             
             guard let countriesList = try? JSONDecoder().decode(CountriesList.self, from: data) else {
-                onFailure(.error(strongSelf.errorMessage))
+                onFailure(LoadError(message: Constants.errorMessage))
                 return
             }
             
@@ -48,10 +55,8 @@ class CountriesService: CountriesServiceProtocol {
             }
             
             onSuccess(countriesObjects)
-        }) { [weak self] (error) in
-            guard let strongSelf = self else { return }
-            
-            onFailure(.error(strongSelf.errorMessage))
+        }) { (error) in
+            onFailure(LoadError(message: Constants.errorMessage))
         }
     }
 }

@@ -8,10 +8,6 @@
 
 import Foundation
 
-protocol CountryListPresentationLogic: AnyObject {
-    func presentCountries(response: CountryList.Response)
-}
-
 final class CountryListPresenter: CountryListPresentationLogic {
     
     weak var viewController: CountryListDisplayLogic?

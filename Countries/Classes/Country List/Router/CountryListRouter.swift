@@ -9,15 +9,6 @@
 import Foundation
 import UIKit
 
-protocol CountryListRoutingLogic: AnyObject {
-    func prepareFor(segue: UIStoryboardSegue, sender: Any?)
-    func openCountryDetails(countryId: UniqueIdentifier)
-}
-
-protocol CountryListDataPassing {
-    var dataStore: CountryListDataStore? { get }
-}
-
 final class CountryListRouter: NSObject, CountryListRoutingLogic, CountryListDataPassing {
     
     fileprivate enum Constants {

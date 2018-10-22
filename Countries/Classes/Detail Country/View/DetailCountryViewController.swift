@@ -9,15 +9,9 @@
 import UIKit
 import PKHUD
 
-protocol DetailCountryDisplayLogic: class {
-    func displayCountry(viewModel: DetailCountry.ViewModel)
-}
-
 class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, ConfigurableViewProtocol {
     
     var interactor: DetailCountryBusinessLogic?
-    var router: (DetailCountryRoutingLogic & DetailCountryDataPassing)?
-    
     var collectionViewDataSource: DetailCountryCollectionViewDataSource?
     
     @IBOutlet weak var collectionViewContainerView: UIView!
@@ -26,31 +20,9 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
     
     var images: [UIImage] = []
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        self.setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.setup()
-    }
-    
-    private func setup() {
-        let viewController = self
-        let interactor = DetailCountryInteractor()
-        let presenter = DetailCountryPresenter()
-        let router = DetailCountryRouter()
-        let worker = DetailCountryWorker()
-        let collectionViewDataSource = DetailCountryCollectionViewDataSource()
-        viewController.interactor = interactor
-        viewController.router = router
-        viewController.collectionViewDataSource = collectionViewDataSource
-        interactor.presenter = presenter
-        interactor.worker = worker
-        presenter.viewController = viewController
-        router.viewController = viewController
-        router.dataStore = interactor
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        DetailCountryConfigurator.sharedInstance.configure(viewController: self)
     }
     
     override func viewDidLoad() {
@@ -62,10 +34,7 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
         self.imagesCollectionView.register(UINib(nibName: "ImageCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ImageCollectionViewCell")
         self.imagesCollectionView.dataSource = self.collectionViewDataSource
         self.imagesCollectionView.delegate = self
-        
-        
-        self.pageControl.currentPage = 0
-        
+
         self.collectionViewContainerView.bringSubview(toFront: self.pageControl)
     }
 
@@ -80,6 +49,10 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
         self.navigationController?.navigationBar.tintColor = UIColor.white
     }
     
+    func setupNavigationBarBlack() {
+        self.navigationController?.navigationBar.tintColor = UIColor.black
+    }
+    
     func setUpView() {
         HUD.show(.progress)
         self.interactor?.setUpViewWithCountry()
@@ -89,10 +62,23 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
         
         HUD.flash(.success, delay: 1.0)
         
-        self.images = viewModel.images
-        self.pageControl.numberOfPages = images.count
-        self.collectionViewDataSource?.displayedCountry = viewModel
-        self.imagesCollectionView.reloadData()
+        if viewModel.images.isEmpty {
+            self.setupNavigationBarBlack()
+        } else {
+            self.images = viewModel.images
+            self.pageControl.numberOfPages = images.count
+            self.pageControl.currentPage = 0
+            self.collectionViewDataSource?.displayedCountry = viewModel
+            self.imagesCollectionView.reloadData()
+        }
+    }
+    
+    func displayError(with message: String?) {
+        let alert = UIAlertController(title: "Error", message: (message != nil) ? message : "Something went wrong", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

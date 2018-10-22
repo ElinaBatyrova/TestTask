@@ -10,7 +10,7 @@ import UIKit
 
 class CountryListTableViewDelegate: NSObject, UITableViewDelegate {
     
-    weak var delegate: CountryListRoutingLogic?
+    var delegate: CountryListRoutingLogic?
     
     var dispayedCountries = [CountryList.ViewModel.DisplayedCountry]()
     

@@ -9,7 +9,6 @@
 import Foundation
 
 protocol ConfigurableViewProtocol: AnyObject {
-    
     func configure(with object: Any?)
 }
 

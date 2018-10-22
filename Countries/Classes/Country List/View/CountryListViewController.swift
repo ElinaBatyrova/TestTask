@@ -13,7 +13,6 @@ class CountryListViewController: UIViewController, CountryListDisplayLogic {
     
     fileprivate enum Constants {
         static let tableCellName = "CountryTableViewCell"
-//        static let segueIdentifier = "toDetailVC"
     }
     
     var interactor: CountryListBusinessLogic?
@@ -24,34 +23,8 @@ class CountryListViewController: UIViewController, CountryListDisplayLogic {
 
     @IBOutlet weak var tableView: UITableView!
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        self.setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.setup()
-    }
-    
-    private func setup() {
-        let viewController = self
-        let interactor = CountryListInteractor()
-        let presenter = CountryListPresenter()
-        let router = CountryListRouter()
-        let worker = CountryListWorker()
-        let tableViewDataSource = CountryListTableViewDataSource()
-        let tableViewDelegate = CountryListTableViewDelegate()
-        viewController.interactor = interactor
-        viewController.router = router
-        viewController.tableViewDataSource = tableViewDataSource
-        viewController.tableViewDelegate = tableViewDelegate
-        interactor.presenter = presenter
-        interactor.worker = worker
-        presenter.viewController = viewController
-        router.viewController = viewController
-        router.dataStore = interactor
-        tableViewDelegate.delegate = router
+    override func awakeFromNib() {
+        CountryListConfigurator.sharedInstance.configure(viewController: self)
     }
     
     override func viewDidLoad() {

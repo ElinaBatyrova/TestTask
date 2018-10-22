@@ -8,10 +8,6 @@
 
 import Foundation
 
-protocol DetailCountryPresentationLogic {
-    func presentCountry(response: DetailCountry.Response)
-}
-
 class DetailCountryPresenter: DetailCountryPresentationLogic {
     
     weak var viewController: DetailCountryDisplayLogic?
@@ -20,5 +16,9 @@ class DetailCountryPresenter: DetailCountryPresentationLogic {
         let viewModel = DetailCountry.ViewModel(images: response.loadedImages)
         
         self.viewController?.displayCountry(viewModel: viewModel)
+    }
+    
+    func presentError(with message: String?) {
+        self.viewController?.displayError(with: message)
     }
 }
