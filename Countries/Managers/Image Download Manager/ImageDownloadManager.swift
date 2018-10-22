@@ -51,7 +51,6 @@ class ImageDownloadManager: ImageDownloadManagerProtocol {
                 success(loadedImage)
             }
         }
-        
     }
     
     func getFromCache(for key: String, completion: @escaping (UIImage?) -> Void) {

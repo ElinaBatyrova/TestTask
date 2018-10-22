@@ -92,10 +92,11 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
         let panRecognizer = UIPanGestureRecognizer()
         
         panRecognizer.addTarget(self, action: #selector(popupViewPanned(recognizer:)))
+        panRecognizer.delegate = self
         
         self.informationView.addGestureRecognizer(panRecognizer)
         
-        self.pageControl.numberOfPages = images.count
+        self.pageControl.numberOfPages = images.count > 1 ? images.count : 0
         self.pageControl.currentPage = 0
         
         self.imagesCollectionView.reloadData()
@@ -249,5 +250,12 @@ extension DetailCountryViewController: UICollectionViewDelegateFlowLayout {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pageIndex = round(scrollView.contentOffset.x/self.collectionViewContainerView.frame.width)
         self.pageControl.currentPage = Int(pageIndex)
+    }
+}
+
+extension DetailCountryViewController: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

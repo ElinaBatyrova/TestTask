@@ -31,7 +31,7 @@ final class DetailCountryWorker {
                 
                 dispatchGroup.leave()
             }) { (error) in
-                onFailure(LoadError(message: error))
+                dispatchGroup.leave()
             }
         }
         
