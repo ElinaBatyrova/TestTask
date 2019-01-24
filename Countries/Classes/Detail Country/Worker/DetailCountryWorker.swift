@@ -11,11 +11,17 @@ import SDWebImage
 
 final class DetailCountryWorker {
     
+    // MARK: - Instance Properties
+    
     var imageDownloadManager: ImageDownloadManagerProtocol!
+    
+    // MARK: - Initializers
     
     init() {
         self.imageDownloadManager = ImageDownloadManager()
     }
+    
+    // MARK: - Instance Methods
     
     func getImages(from urls: [String], onSuccess: @escaping ([UIImage]) -> Void, onFailure: @escaping (LoadError?) -> Void) {
         var loadedImages: [UIImage] = []

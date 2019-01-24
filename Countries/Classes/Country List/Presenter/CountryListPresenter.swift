@@ -10,7 +10,11 @@ import Foundation
 
 final class CountryListPresenter: CountryListPresentationLogic {
     
+    // MARK: - Instance Properties
+    
     weak var viewController: CountryListDisplayLogic?
+    
+    // MARK: - Instance Methods
     
     func presentCountries(response: CountryList.Response) {
         var viewModel = CountryList.ViewModel(displayedCountries: [])

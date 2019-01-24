@@ -10,6 +10,9 @@ import Foundation
 import Alamofire
 
 protocol Request {
+    
+    // MARK: - Instance Properties
+    
     var method: HTTPMethod { get }
     var endPoint: String { get }
 }

@@ -8,6 +8,9 @@
 
 import UIKit
 
-protocol ImageDownloadManagerProtocol: class {
+protocol ImageDownloadManagerProtocol: AnyObject {
+    
+    // MARK: - Instance Methods
+    
     func downloadImage(from url: URL, success: @escaping (UIImage?) -> Void, failure: @escaping (String) -> Void)
 }

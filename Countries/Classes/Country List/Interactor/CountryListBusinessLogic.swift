@@ -9,5 +9,8 @@
 import Foundation
 
 protocol CountryListBusinessLogic {
+    
+    // MARK: - Instance Methods
+    
     func fetchCountries(request: CountryList.Request)
 }

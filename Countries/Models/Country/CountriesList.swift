@@ -9,6 +9,9 @@
 import Foundation
 
 struct CountriesList: Codable {
+    
+    // MARK: - Instance Properties
+    
     let next: String
     let countries: [Country]
 }

@@ -10,8 +10,13 @@ import Foundation
 import Alamofire
 
 class GetCountriesListRequest: Request {
+    
+    // MARK: - Instance Properties
+    
     var method: HTTPMethod = .get
     var endPoint: String
+    
+    // MARK: - Initializers
     
     init(endpoint: String) {
         self.endPoint = endpoint

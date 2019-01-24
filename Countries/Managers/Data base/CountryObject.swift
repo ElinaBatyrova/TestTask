@@ -10,6 +10,9 @@ import Foundation
 import RealmSwift
 
 final class CountryObject: Object {
+    
+    // MARK: - Instance Properties
+    
     @objc dynamic var name = ""
     @objc dynamic var continent = ""
     @objc dynamic var capital = ""
@@ -20,6 +23,8 @@ final class CountryObject: Object {
     var imagesURLs: List<String> = List<String>()
     @objc dynamic var flagURL = ""
     
+    // MARK: - Instance Methods
+    
     override static func primaryKey() -> String? {
         return "name"
     }
@@ -27,7 +32,11 @@ final class CountryObject: Object {
 
 class ImagesURLs {
     
+    // MARK: - Instance Properties
+    
     var values: [String]
+    
+    // MARK: - Initializers
     
     init(values: [String]) {
         self.values = values

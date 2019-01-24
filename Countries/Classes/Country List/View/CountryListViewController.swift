@@ -11,17 +11,28 @@ import PKHUD
 
 class CountryListViewController: UIViewController, CountryListDisplayLogic {
     
+    // MARK: - Nested Types
+    
     fileprivate enum Constants {
+        
+        // MARK: - Type Properties
+        
         static let tableCellName = "CountryTableViewCell"
     }
+    
+    // MARK: - Instance Properties
     
     var interactor: CountryListBusinessLogic?
     var router: CountryListRoutingLogic?
     
     var tableViewDataSource: CountryListTableViewDataSource?
     var tableViewDelegate: CountryListTableViewDelegate?
+    
+    // MARK: -
 
     @IBOutlet weak var tableView: UITableView!
+    
+    // MARK: - Instance Methods
     
     override func awakeFromNib() {
         CountryListConfigurator.sharedInstance.configure(viewController: self)

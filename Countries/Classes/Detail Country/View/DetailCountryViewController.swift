@@ -10,11 +10,19 @@ import UIKit
 import PKHUD
 
 private enum State {
+    
+    // MARK: - Type Properties
+    
     case closed
     case open
 }
 
+// MARK: -
+
 extension State {
+    
+    // MARK: - Type Properties
+    
     var opposite: State {
         switch self {
         case .open:
@@ -28,7 +36,12 @@ extension State {
 
 class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, ConfigurableViewProtocol {
     
+    // MARK: - Nested Types
+    
     fileprivate enum Constants {
+        
+        // MARK: - Type Properties
+        
         static let tableCellName = "ImageCollectionViewCell"
         
         static let viewAnimationIndex = 0
@@ -37,8 +50,12 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
         static let closedViewConstraintConstant: CGFloat = 180
     }
     
+    // MARK: - Instance Properties
+    
     var interactor: DetailCountryBusinessLogic?
     var collectionViewDataSource: DetailCountryCollectionViewDataSource?
+    
+    // MARK: -
     
     @IBOutlet weak var countryNameLabel: UILabel!
     
@@ -50,6 +67,8 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
     
     @IBOutlet weak var pageControl: UIPageControl!
     
+    // MARK: -
+    
     var images: [UIImage] = []
     
     private var currentState: State = .closed
@@ -57,6 +76,8 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
     private var runningAnimators = [UIViewPropertyAnimator]()
     
     private var animationProgress = [CGFloat]()
+    
+    // MARK: - Instance Methods
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -241,7 +262,11 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
+
 extension DetailCountryViewController: UICollectionViewDelegateFlowLayout {
+    
+    // MARK: - Instance Methods
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
@@ -253,7 +278,11 @@ extension DetailCountryViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - UIGestureRecognizerDelegate
+
 extension DetailCountryViewController: UIGestureRecognizerDelegate {
+    
+    // MARK: - Instance Methods
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true

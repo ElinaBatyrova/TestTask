@@ -9,8 +9,12 @@
 import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
+    
+    // MARK: - Instance Properties
 
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet fileprivate weak var imageView: UIImageView!
+    
+    // MARK: - Instance Methods
     
     override func awakeFromNib() {
         super.awakeFromNib()

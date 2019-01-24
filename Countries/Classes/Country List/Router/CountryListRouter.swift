@@ -11,12 +11,21 @@ import UIKit
 
 final class CountryListRouter: NSObject, CountryListRoutingLogic, CountryListDataPassing {
     
+    // MARK: - Nested Types
+    
     fileprivate enum Constants {
+        
+        // MARK: - Type Properties
+        
         static let segueIdentifier = "toDetailVC"
     }
     
+    // MARK: - Instance Properties
+    
     weak var viewController: CountryListViewController?
     var dataStore: CountryListDataStore?
+    
+    // MARK: - Instance Methods
     
     func openCountryDetails(countryId: UniqueIdentifier) {
         if let dataStore = self.dataStore, let country = dataStore.countries?[countryId] {

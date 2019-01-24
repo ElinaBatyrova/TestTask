@@ -10,7 +10,11 @@ import Foundation
 
 class DetailCountryPresenter: DetailCountryPresentationLogic {
     
+    // MARK: - Instance Properties
+    
     weak var viewController: DetailCountryDisplayLogic?
+    
+    // MARK: - Instance Methods
     
     func presentCountry(response: DetailCountry.Response) {
         let viewModel = DetailCountry.ViewModel(images: response.loadedImages, countryName: response.country.name)

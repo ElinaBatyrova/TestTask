@@ -11,8 +11,11 @@ import SDWebImage
 
 class ImageDownloadManager: ImageDownloadManagerProtocol {
     
-    private let errorMessage = "Ошибка при загрузке изображения"
-    let cacheNamespace = "cacher"
+    // MARK: - Instance Properties
+    
+    fileprivate let errorMessage = "Ошибка при загрузке изображения"
+    
+    // MARK: - Instance Methods
     
     func downloadImage(from url: URL, success: @escaping (UIImage?) -> Void, failure: @escaping (String) -> Void) {
         let dispatchGroup = DispatchGroup()

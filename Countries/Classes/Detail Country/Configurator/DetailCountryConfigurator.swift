@@ -10,7 +10,11 @@ import UIKit
 
 class DetailCountryConfigurator {
     
+    // MARK: - Instance Properties
+    
     static let sharedInstance = DetailCountryConfigurator()
+    
+    // MARK: - Instance Methods
     
     func configure(viewController: DetailCountryViewController) {
         let interactor = DetailCountryInteractor()

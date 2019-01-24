@@ -10,9 +10,13 @@ import Foundation
 
 final class DetailCountryInteractor: DetailCountryBusinessLogic, DetailCountryDataStore {
     
+    // MARK: - Instance Properties
+    
     var presenter: DetailCountryPresentationLogic?
     var worker = DetailCountryWorker()
     var country: CountryObject?
+    
+    // MARK: - Instance Methods
     
     func setUpViewWithCountry() {
         var imagesURLs: [String] = []

@@ -10,15 +10,24 @@ import Foundation
 import UIKit
 
 enum DetailCountry {
+    
+    // MARK: - Type Properties
+    
     struct Request {
     }
     
     struct Response {
+        
+        // MARK: - Instance Properties
+        
         let country: CountryObject
         let loadedImages: [UIImage]
     }
     
     struct ViewModel {
+        
+        // MARK: - Instance Properties
+        
         let images: [UIImage]
         let countryName: String
     }

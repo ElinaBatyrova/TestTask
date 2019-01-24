@@ -11,11 +11,17 @@ import RealmSwift
 
 public final class WriteTransaction {
     
+    // MARK: - Instance Properties
+    
     private let realm: Realm
+    
+    // MARK: - Initializers
     
     internal init(realm: Realm){
         self.realm = realm
     }
+    
+    // MARK: - Instance Methods
     
     public func add<T: Persistable>(_ value: T, update: Bool) {
         realm.add(value.managedObject(), update: update)

@@ -10,21 +10,31 @@ import Foundation
 
 class CountriesService: CountriesServiceProtocol {
     
-    var apiProvider: ApiProvider!
-    var container: Container!
+    // MARK: - Nested Types
     
     fileprivate enum Constants {
+        
+        // MARK: - Type Properties
+        
         static let errorMessage = "Ошибка при загрузке данных."
         static let endpoint = "https://rawgit.com/NikitaAsabin/799e4502c9fc3e0ea7af439b2dfd88fa/raw/7f5c6c66358501f72fada21e04d75f64474a7888/page1.json"
     }
+    
+    // MARK: - Instance Properties
+    
+    fileprivate var apiProvider: ApiProvider!
+    fileprivate var container: Container!
+    
+    // MARK: - Initializers
     
     init() {
         self.apiProvider = CountriesListApiProvider()
         self.container = try! Container()
     }
+    
+    // MARK: - Instance Methods
 
     func getCountriesList(onSuccess: @escaping ([CountryObject]) -> Void, onFailure: @escaping (LoadError?) -> Void) {
-        
         let request = GetCountriesListRequest(endpoint: Constants.endpoint)
         
         self.apiProvider.makeRequest(with: request, onSuccess: { [weak self] (data) in

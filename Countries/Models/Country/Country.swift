@@ -10,6 +10,9 @@ import Foundation
 import RealmSwift
 
 struct Country: Codable {
+    
+    // MARK: - Instance Properties
+    
     let name: String
     let continent: String
     let capital: String
@@ -25,7 +28,11 @@ struct Country: Codable {
     }
 }
 
+// MARK: - Persistable
+
 extension Country: Persistable {
+    
+    // MARK: - Initializers
     
     public init(managedObject: CountryObject) {
         name = managedObject.name
@@ -37,6 +44,8 @@ extension Country: Persistable {
         image = managedObject.imageURL
         country_info = CountryInfo.init(images: Array(managedObject.imagesURLs), flag: managedObject.flagURL)
     }
+    
+    // MARK: - Instance Methods
     
     public func managedObject() -> CountryObject {
         let country = CountryObject()

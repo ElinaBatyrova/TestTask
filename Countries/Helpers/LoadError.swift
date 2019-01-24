@@ -9,5 +9,8 @@
 import Foundation
 
 struct LoadError {
+    
+    // MARK: - Instance Properties
+    
     let message: String
 }

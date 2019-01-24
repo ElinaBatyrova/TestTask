@@ -9,6 +9,9 @@
 import UIKit
 
 protocol CountryListRoutingLogic {
+    
+    // MARK: - Instance Methods
+    
     func prepareFor(segue: UIStoryboardSegue, sender: Any?)
     func openCountryDetails(countryId: UniqueIdentifier)
 }

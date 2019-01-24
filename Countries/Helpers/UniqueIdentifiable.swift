@@ -8,7 +8,11 @@
 
 typealias UniqueIdentifier = Int
 
-/// Протокол определяющий поведение объектов идентифцируемых уникально
+// MARK: - Протокол определяющий поведение объектов идентифицируемых уникально
+
 protocol UniqueIdentifiable {
+    
+    // MARK: - Instance Methods
+    
     var uid: UniqueIdentifier { get }
 }

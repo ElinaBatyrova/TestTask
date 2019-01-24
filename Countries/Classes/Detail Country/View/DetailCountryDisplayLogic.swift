@@ -8,7 +8,10 @@
 
 import Foundation
 
-protocol DetailCountryDisplayLogic: class {
+protocol DetailCountryDisplayLogic: AnyObject {
+    
+    // MARK: - Instance Methods
+    
     func displayCountry(viewModel: DetailCountry.ViewModel)
     func displayError(with message: String?)
 }

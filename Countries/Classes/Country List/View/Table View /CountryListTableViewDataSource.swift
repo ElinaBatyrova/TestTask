@@ -8,12 +8,24 @@
 
 import UIKit
 
-class CountryListTableViewDataSource: NSObject, UITableViewDataSource {
+class CountryListTableViewDataSource: NSObject {
+    
+    // MARK: - Instance Properties
+    
     var dispayedCountries = [CountryList.ViewModel.DisplayedCountry]()
+    
+    // MARK: - Initializers
     
     init(viewModels: [CountryList.ViewModel.DisplayedCountry] = []) {
         self.dispayedCountries = viewModels
     }
+}
+
+// MARK: - UITableViewDataSource
+
+extension CountryListTableViewDataSource: UITableViewDataSource {
+    
+    // MARK: - Instance Methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dispayedCountries.count

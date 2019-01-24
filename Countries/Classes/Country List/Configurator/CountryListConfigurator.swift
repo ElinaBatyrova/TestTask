@@ -10,7 +10,11 @@ import Foundation
 
 class CountryListConfigurator {
     
+    // MARK: - Instance Properties
+    
     static let sharedInstance = CountryListConfigurator()
+    
+    // MARK: - Instance Methods
     
     func configure(viewController: CountryListViewController) {
         let interactor = CountryListInteractor()

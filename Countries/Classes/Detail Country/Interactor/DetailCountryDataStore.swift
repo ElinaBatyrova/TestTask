@@ -9,5 +9,8 @@
 import Foundation
 
 protocol DetailCountryDataStore {
+    
+    // MARK: - Instance Properties
+    
     var country: CountryObject? { get set }
 }

@@ -9,6 +9,9 @@
 import Foundation
 
 protocol DetailCountryPresentationLogic {
+    
+    // MARK: - Instance Methods
+    
     func presentCountry(response: DetailCountry.Response)
     func presentError(with message: String?)
 }

@@ -9,6 +9,9 @@
 import Foundation
 
 protocol DetailCountryBusinessLogic {
+    
+    // MARK: - Instance Methods
+    
     func setUpViewWithCountry()
     func configureBusinessLogic(with object: Any?)
 }

@@ -11,7 +11,11 @@ import RealmSwift
 
 public final class Container {
     
+    // MARK: - Instance Properties
+    
     private let realm: Realm
+    
+    // MARK: - Initializers
     
     public convenience init() throws {
         try self.init(realm: Realm())
@@ -20,6 +24,8 @@ public final class Container {
     internal init(realm: Realm) {
         self.realm = realm
     }
+    
+    // MARK: - Instance Methods
     
     public func write(_ block: (WriteTransaction) throws -> Void) throws {
         let transaction = WriteTransaction(realm: realm)

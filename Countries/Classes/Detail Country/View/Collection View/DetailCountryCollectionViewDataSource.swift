@@ -10,10 +10,13 @@ import UIKit
 
 class DetailCountryCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     
+    // MARK: - Instance Properties
+    
     var displayedCountry: DetailCountry.ViewModel?
     
+    // MARK: - Instance Methods
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         if let images = self.displayedCountry?.images {
             return images.count
         } else {

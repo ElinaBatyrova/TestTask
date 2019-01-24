@@ -11,10 +11,14 @@ import SDWebImage
 
 class CountryTableViewCell: UITableViewCell {
     
+    // MARK: - Instance Properties
+    
     @IBOutlet fileprivate weak var nameLabel: UILabel!
     @IBOutlet fileprivate weak var cityNameLabel: UILabel!
     @IBOutlet fileprivate weak var flagImageView: UIImageView!
     @IBOutlet fileprivate weak var descriptionLabel: UILabel!
+    
+    // MARK: - Instance Methods
     
     override func awakeFromNib() {
         super.awakeFromNib()

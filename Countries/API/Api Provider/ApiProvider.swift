@@ -9,5 +9,8 @@
 import Foundation
 
 protocol ApiProvider {
+    
+    // MARK: - Instance Methods
+    
     func makeRequest(with request: Request, onSuccess: @escaping (Data?) -> Void, onFailure: @escaping (LoadError?) -> Void)
 }

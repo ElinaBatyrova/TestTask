@@ -10,10 +10,14 @@ import Foundation
 
 class CountryListInteractor: CountryListBusinessLogic, CountryListDataStore {
     
+    // MARK: - Instance Properties
+    
     var presenter: CountryListPresentationLogic?
     var worker: CountryListWorker?
     
     var countries: [CountryObject]?
+    
+    // MARK: - Instance Methods
     
     func fetchCountries(request: CountryList.Request) {
         self.worker?.getCountries(onSuccess: { [weak self] (countries, loadedImages) in

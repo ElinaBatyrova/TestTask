@@ -9,6 +9,9 @@
 import Foundation
 
 protocol ConfigurableViewProtocol: AnyObject {
+    
+    // MARK: - Instance Methods
+    
     func configure(with object: Any?)
 }
 

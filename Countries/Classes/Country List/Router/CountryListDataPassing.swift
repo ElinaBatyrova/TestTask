@@ -9,5 +9,8 @@
 import Foundation
 
 protocol CountryListDataPassing {
+    
+    // MARK: - Instance Properties
+    
     var dataStore: CountryListDataStore? { get }
 }
