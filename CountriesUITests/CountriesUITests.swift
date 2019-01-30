@@ -9,28 +9,68 @@
 import XCTest
 
 class CountriesUITests: XCTestCase {
+    
+    // MARK: - Instance Properties
+    
+    fileprivate var app: XCUIApplication!
+    
+    // MARK: - Test Lifecycle
         
     override func setUp() {
         super.setUp()
         
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        XCUIApplication().launch()
 
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        self.setupApplicationForUITesting()
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        self.app = nil
+        
         super.tearDown()
     }
     
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    // MARK: - Test Setup
+    
+    func setupApplicationForUITesting() {
+        self.app = XCUIApplication()
+        self.app.launchArguments.append("--uitesting")
     }
     
+    // MARK: - Tests
+    
+    func testTapOnCellShouldOpenDetailController() {
+        // 1. Given
+        let tablesQuery = app.tables
+        
+        // 2. When
+        self.app.launch()
+        
+        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["Канберра"]/*[[".cells.staticTexts[\"Канберра\"]",".staticTexts[\"Канберра\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        // 3. Then
+        XCTAssert(self.app.staticTexts["Австралия"].exists)
+    }
+    
+    func testTapToBackShouldReturnToTable() {
+        // 1. Given
+        let tablesQuery = app.tables
+        
+        // 2. When
+        self.app.launch()
+        
+        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["Канберра"]/*[[".cells.staticTexts[\"Канберра\"]",".staticTexts[\"Канберра\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        sleep(1)
+        
+        let backButton = self.app.navigationBars["Countries.DetailCountryView"].buttons["Countries"]
+        
+        _ = backButton.waitForExistence(timeout: 5)
+        
+        backButton.tap()
+        
+        // 3. Then
+        XCTAssert(self.app.staticTexts["Абхазия"].exists)
+    }
 }
+
