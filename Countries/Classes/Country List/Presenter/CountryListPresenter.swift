@@ -28,5 +28,9 @@ final class CountryListPresenter: CountryListPresentationLogic {
         
         self.viewController?.displayCountries(viewModel: viewModel)
     }
+    
+    func present(error: LoadError) {
+        self.viewController?.displayError(with: error.message)
+    }
 }
 

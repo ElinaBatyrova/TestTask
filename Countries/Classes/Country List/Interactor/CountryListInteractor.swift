@@ -13,7 +13,7 @@ class CountryListInteractor: CountryListBusinessLogic, CountryListDataStore {
     // MARK: - Instance Properties
     
     var presenter: CountryListPresentationLogic?
-    var worker: CountryListWorker?
+    var worker: CountryListWorkerProtocol?
     
     var countries: [CountryObject]?
     
@@ -21,15 +21,25 @@ class CountryListInteractor: CountryListBusinessLogic, CountryListDataStore {
     
     func fetchCountries(request: CountryList.Request) {
         self.worker?.getCountries(onSuccess: { [weak self] (countries, loadedImages) in
-            guard let strongSelf = self else { return }
+            guard let strongSelf = self else {
+                return
+            }
+            
             self?.countries = countries
             
             let response = CountryList.Response(countries: countries, loadedFlagImages: loadedImages)
             
             strongSelf.presenter?.presentCountries(response: response)
             }, onFailure: { [weak self] (error) in
-                guard let strongSelf = self else { return }
-                //            TODO
+                guard let strongSelf = self else {
+                    return
+                }
+                
+                guard let error = error else {
+                    return
+                }
+                
+                strongSelf.presenter?.present(error: error)
         })
     }
 }

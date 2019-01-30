@@ -9,7 +9,7 @@
 import Foundation
 import SDWebImage
 
-final class CountryListWorker {
+class CountryListWorker: CountryListWorkerProtocol {
     
     // MARK: - Instance Properties
     
@@ -24,7 +24,6 @@ final class CountryListWorker {
     // MARK: - Instance Methods
     
     func getCountries(onSuccess: @escaping ([CountryObject], [UIImage?]) -> Void, onFailure: @escaping (LoadError?) -> Void) {
-        
         self.countriesService.getCountriesList(onSuccess: { (countries) in
             var loadedImages: [UIImage?] = []
             

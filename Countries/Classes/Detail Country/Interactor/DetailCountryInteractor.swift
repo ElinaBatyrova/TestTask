@@ -13,7 +13,7 @@ final class DetailCountryInteractor: DetailCountryBusinessLogic, DetailCountryDa
     // MARK: - Instance Properties
     
     var presenter: DetailCountryPresentationLogic?
-    var worker = DetailCountryWorker()
+    var worker: DetailCountryWorkerProtocol = DetailCountryWorker()
     var country: CountryObject?
     
     // MARK: - Instance Methods
@@ -21,21 +21,24 @@ final class DetailCountryInteractor: DetailCountryBusinessLogic, DetailCountryDa
     func setUpViewWithCountry() {
         var imagesURLs: [String] = []
         
-        guard let stringURLs = self.country?.imagesURLs else { return }
+        guard let stringURLs = self.country?.imagesURLs else {
+            return
+        }
         
         for string in stringURLs{
             imagesURLs.append(string)
         }
         
         self.worker.getImages(from: imagesURLs, onSuccess: { (images) in
-            
             if let presenter = self.presenter, let country = self.country {
                 let countryResponse = DetailCountry.Response(country: country, loadedImages: images)
                 
                 presenter.presentCountry(response: countryResponse)
             }
         }) { [weak self] (error) in
-            guard let strongSelf = self else { return }
+            guard let strongSelf = self else {
+                return
+            }
             
             strongSelf.presenter?.presentError(with: error?.message)
         }

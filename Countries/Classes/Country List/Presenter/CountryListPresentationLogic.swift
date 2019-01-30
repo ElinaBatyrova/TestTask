@@ -13,4 +13,5 @@ protocol CountryListPresentationLogic {
     // MARK: - Instance Methods
     
     func presentCountries(response: CountryList.Response)
+    func present(error: LoadError)
 }

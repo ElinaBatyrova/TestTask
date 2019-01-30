@@ -13,4 +13,5 @@ protocol CountryListDisplayLogic: AnyObject {
     // MARK: - Instance Methods
     
     func displayCountries(viewModel: CountryList.ViewModel)
+    func displayError(with message: String?)
 }

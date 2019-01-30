@@ -30,15 +30,15 @@ final class CountryObject: Object {
     }
 }
 
-class ImagesURLs {
-    
-    // MARK: - Instance Properties
-    
-    var values: [String]
-    
-    // MARK: - Initializers
-    
-    init(values: [String]) {
-        self.values = values
-    }
-}
+//class ImagesURLs {
+//
+//    // MARK: - Instance Properties
+//
+//    var values: [String]
+//
+//    // MARK: - Initializers
+//
+//    init(values: [String]) {
+//        self.values = values
+//    }
+//}

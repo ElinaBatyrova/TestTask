@@ -12,7 +12,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Instance Properties
 
-    @IBOutlet fileprivate weak var imageView: UIImageView!
+    @IBOutlet weak var imageView: UIImageView!
     
     // MARK: - Instance Methods
     

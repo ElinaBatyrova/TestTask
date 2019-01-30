@@ -30,7 +30,7 @@ extension CountryListTableViewDelegate: UITableViewDelegate {
     // MARK: - Instance Methods
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        defer { tableView.deselectRow(at: indexPath, animated: true) }
+        tableView.deselectRow(at: indexPath, animated: true)
         
         self.delegate?.openCountryDetails(countryId: indexPath.row)
     }

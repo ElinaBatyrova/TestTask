@@ -9,7 +9,7 @@
 import Foundation
 import SDWebImage
 
-final class DetailCountryWorker {
+final class DetailCountryWorker: DetailCountryWorkerProtocol {
     
     // MARK: - Instance Properties
     
