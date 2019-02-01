@@ -21,9 +21,11 @@ class DetailCountryConfigurator {
         let presenter = DetailCountryPresenter()
         let worker = DetailCountryWorker()
         let collectionViewDataSource = DetailCountryCollectionViewDataSource()
+        let tableViewDataSource = DetailCountryTableViewDataSource()
         
         viewController.interactor = interactor
         viewController.collectionViewDataSource = collectionViewDataSource
+        viewController.tableViewDataSource = tableViewDataSource
         
         interactor.presenter = presenter
         interactor.worker = worker

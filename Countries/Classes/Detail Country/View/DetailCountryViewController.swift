@@ -8,6 +8,7 @@
 
 import UIKit
 import PKHUD
+import PassKit
 
 private enum State {
     
@@ -42,7 +43,8 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
         
         // MARK: - Type Properties
         
-        static let tableCellName = "ImageCollectionViewCell"
+        static let collectionCellName = "ImageCollectionViewCell"
+        static let tableCellName = "ApplePayTableViewCell"
         
         static let viewAnimationIndex = 0
         
@@ -54,6 +56,7 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
     
     var interactor: DetailCountryBusinessLogic?
     var collectionViewDataSource: DetailCountryCollectionViewDataSource?
+    var tableViewDataSource: DetailCountryTableViewDataSource?
     
     // MARK: -
     
@@ -66,6 +69,8 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
     @IBOutlet weak var informationViewTopConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var pageControl: UIPageControl!
+    
+    @IBOutlet weak var tableView: UITableView!
     
     // MARK: -
     
@@ -89,6 +94,7 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
         
         self.setupNavigationBar()
         self.setupCollectionView()
+        self.setupTableView()
         self.setUpView()
     }
 
@@ -124,11 +130,26 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
     }
     
     func setupCollectionView() {
-        self.imagesCollectionView.register(UINib(nibName: Constants.tableCellName, bundle: nil), forCellWithReuseIdentifier: Constants.tableCellName)
+        self.imagesCollectionView.register(UINib(nibName: Constants.collectionCellName, bundle: nil), forCellWithReuseIdentifier: Constants.collectionCellName)
         self.imagesCollectionView.dataSource = self.collectionViewDataSource
         self.imagesCollectionView.delegate = self
         
         self.collectionViewContainerView.bringSubview(toFront: self.pageControl)
+    }
+    
+    func setupTableView() {
+        self.tableView.register(UINib(nibName: Constants.tableCellName, bundle: nil), forCellReuseIdentifier: Constants.tableCellName)
+        self.tableView.dataSource = self.tableViewDataSource
+        self.tableView.rowHeight = 50.0
+        
+        guard let isApplePayAvailable = self.interactor?.isApplePayAvailable else {
+            return
+        }
+        
+        self.tableViewDataSource?.isApplePayButtonHidden = !isApplePayAvailable
+        self.tableViewDataSource?.onPayWithApplePayButtonClicked = {
+            self.interactor?.payWithApplePay(delegate: self)
+        }
     }
     
     func setUpView() {
@@ -286,5 +307,20 @@ extension DetailCountryViewController: UIGestureRecognizerDelegate {
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
+    }
+}
+
+// MARK: -
+
+extension DetailCountryViewController: PKPaymentAuthorizationControllerDelegate {
+    
+    // MARK: - Instance Methods
+    
+    func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
+        controller.dismiss(completion: nil)
+    }
+    
+    func paymentAuthorizationController(_ controller: PKPaymentAuthorizationController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
+        completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
     }
 }

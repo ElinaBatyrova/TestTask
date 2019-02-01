@@ -7,11 +7,17 @@
 //
 
 import Foundation
+import PassKit
 
 protocol DetailCountryBusinessLogic {
+    
+    // MARK: - Instance Properties
+    
+    var isApplePayAvailable: Bool { get }
     
     // MARK: - Instance Methods
     
     func setUpViewWithCountry()
     func configureBusinessLogic(with object: Any?)
+    func payWithApplePay(delegate: PKPaymentAuthorizationControllerDelegate)
 }

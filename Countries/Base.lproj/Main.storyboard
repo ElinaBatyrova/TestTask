@@ -141,6 +141,7 @@
                         <outlet property="informationView" destination="ZFo-hU-507" id="yGW-yc-VVJ"/>
                         <outlet property="informationViewTopConstraint" destination="9Ix-9n-Vmq" id="MKi-FV-eVw"/>
                         <outlet property="pageControl" destination="1hG-ic-MaA" id="TRU-Ss-QWS"/>
+                        <outlet property="tableView" destination="zZ2-3p-9ud" id="y3L-Uk-B42"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rgK-fE-6kh" userLabel="First Responder" sceneMemberID="firstResponder"/>
