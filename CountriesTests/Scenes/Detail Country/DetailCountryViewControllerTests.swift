@@ -8,6 +8,7 @@
 
 @testable import Countries
 import XCTest
+import PassKit
 
 class DetailCountryViewControllerTests: XCTestCase {
     
@@ -162,11 +163,14 @@ class DetailCountryViewControllerTests: XCTestCase {
 // MARK: - DetailCountryBusinessLogicMock
 
 class DetailCountryBusinessLogicMock: DetailCountryBusinessLogic {
-    
+
     // MARK: - Instance Properties
     
     fileprivate var setupViewCalled = false
     fileprivate var configureBusinessLogicCalled = false
+    fileprivate var payWithApplePayCalled = false
+    
+    var isApplePayAvailable: Bool = true
 
     // MARK: - Instance Methods
     
@@ -176,6 +180,10 @@ class DetailCountryBusinessLogicMock: DetailCountryBusinessLogic {
     
     func configureBusinessLogic(with object: Any?) {
         self.configureBusinessLogicCalled = true
+    }
+    
+    func payWithApplePay(delegate: PKPaymentAuthorizationControllerDelegate) {
+        self.payWithApplePayCalled = true
     }
 }
 

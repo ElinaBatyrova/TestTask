@@ -77,12 +77,6 @@ final class DetailCountryInteractor: DetailCountryBusinessLogic, DetailCountryDa
         
         applePayController.delegate = delegate
         
-        applePayController.present { (success) in
-            if success {
-                print("Presented payment controller")
-            } else {
-                print("Failed to present payment controller")
-            }
-        }
+        applePayController.present()
     }
 }

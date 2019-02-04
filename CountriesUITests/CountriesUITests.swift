@@ -59,18 +59,30 @@ class CountriesUITests: XCTestCase {
         // 2. When
         self.app.launch()
         
-        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["Канберра"]/*[[".cells.staticTexts[\"Канберра\"]",".staticTexts[\"Канберра\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        let cell = tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["Канберра"]/*[[".cells.staticTexts[\"Канберра\"]",".staticTexts[\"Канберра\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
         
-        sleep(1)
+        self.waitForElementToAppear(cell)
+        
+        cell.tap()
         
         let backButton = self.app.navigationBars["Countries.DetailCountryView"].buttons["Countries"]
         
-        _ = backButton.waitForExistence(timeout: 5)
+        let name = self.app.staticTexts["Австралия"]
+        
+        self.waitForElementToAppear(name)
         
         backButton.tap()
         
         // 3. Then
         XCTAssert(self.app.staticTexts["Абхазия"].exists)
+    }
+    
+    func waitForElementToAppear(_ element: XCUIElement) {
+        let predicate = NSPredicate(format: "exists == true")
+        _ = expectation(for: predicate, evaluatedWith: element,
+                                      handler: nil)
+        
+        self.waitForExpectations(timeout: 5)
     }
 }
 
