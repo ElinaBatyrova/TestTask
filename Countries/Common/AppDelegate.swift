@@ -12,10 +12,21 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    var backgroundFetchCompleted: ((UIBackgroundFetchResult) -> Void)?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onBackgroundFetchCompleted(_:)), name: .backgroundFetchCompleted, object: nil)
+        
         return true
+    }
+    
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        NotificationCenter.default.post(Notification(name: .backgroundFetch))
+        
+        self.backgroundFetchCompleted = completionHandler
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -41,3 +52,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+// MARK: -
+
+extension AppDelegate {
+    
+    // MARK: - Instance Methods
+    
+    @objc func onBackgroundFetchCompleted(_ notification: NSNotification) {
+        self.backgroundFetchCompleted?(.newData)
+        
+        self.backgroundFetchCompleted = nil
+    }
+}
