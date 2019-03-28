@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import PKHUD
+import SVProgressHUD
 
 class CountryListViewController: UIViewController, CountryListDisplayLogic {
     
@@ -67,7 +67,8 @@ class CountryListViewController: UIViewController, CountryListDisplayLogic {
     }
     
     func setUpView() {
-        HUD.show(.progress)
+        SVProgressHUD.show()
+    
         let request = CountryList.Request()
         self.interactor?.fetchCountries(request: request)
     }
@@ -76,11 +77,12 @@ class CountryListViewController: UIViewController, CountryListDisplayLogic {
         self.tableViewDelegate?.dispayedCountries = viewModel.displayedCountries
         self.tableViewDataSource?.dispayedCountries = viewModel.displayedCountries
         self.tableView.reloadData()
-        HUD.flash(.success, delay: 1.0)
+        
+        SVProgressHUD.dismiss()
     }
     
     func displayError(with message: String?) {
-        HUD.flash(.error, delay: 1.0)
+        SVProgressHUD.dismiss()
         
         let alert = UIAlertController(title: "Error", message: (message != nil) ? message : "Something went wrong", preferredStyle: .alert)
         

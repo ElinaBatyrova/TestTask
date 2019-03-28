@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import PKHUD
+import SVProgressHUD
 import PassKit
 
 private enum State {
@@ -153,13 +153,13 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
     }
     
     func setUpView() {
-        HUD.show(.progress)
+        SVProgressHUD.show()
         
         self.interactor?.setUpViewWithCountry()
     }
 
     func displayCountry(viewModel: DetailCountry.ViewModel) {
-        HUD.flash(.success, delay: 1.0)
+        SVProgressHUD.dismiss()
         
         self.countryNameLabel.text = viewModel.countryName
         
@@ -173,7 +173,7 @@ class DetailCountryViewController: UIViewController, DetailCountryDisplayLogic, 
     }
     
     func displayError(with message: String?) {
-        HUD.flash(.error, delay: 1.0)
+        SVProgressHUD.dismiss()
         
         let alert = UIAlertController(title: "Error", message: (message != nil) ? message : "Something went wrong", preferredStyle: .alert)
         

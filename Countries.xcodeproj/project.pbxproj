@@ -37,7 +37,6 @@
 		C34FC4F32147EEE700EE76B6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C34FC4F12147EEE700EE76B6 /* Main.storyboard */; };
 		C34FC4F52147EEE900EE76B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C34FC4F42147EEE900EE76B6 /* Assets.xcassets */; };
 		C34FC4F82147EEE900EE76B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C34FC4F62147EEE900EE76B6 /* LaunchScreen.storyboard */; };
-		C34FC5032147EEE900EE76B6 /* CountriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34FC5022147EEE900EE76B6 /* CountriesTests.swift */; };
 		C34FC50E2147EEE900EE76B6 /* CountriesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34FC50D2147EEE900EE76B6 /* CountriesUITests.swift */; };
 		C34FC51C2147F07000EE76B6 /* CountryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34FC51B2147F07000EE76B6 /* CountryListViewController.swift */; };
 		C354BC3A2200752000E1FD1D /* DetailCountryViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354BC392200752000E1FD1D /* DetailCountryViewControllerTests.swift */; };
@@ -136,7 +135,6 @@
 		C34FC4F72147EEE900EE76B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C34FC4F92147EEE900EE76B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C34FC4FE2147EEE900EE76B6 /* CountriesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountriesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C34FC5022147EEE900EE76B6 /* CountriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesTests.swift; sourceTree = "<group>"; };
 		C34FC5042147EEE900EE76B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C34FC5092147EEE900EE76B6 /* CountriesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountriesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C34FC50D2147EEE900EE76B6 /* CountriesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesUITests.swift; sourceTree = "<group>"; };
@@ -474,7 +472,6 @@
 			children = (
 				C3E2D64021FA251C001F645A /* Scenes */,
 				C354BC482200B48A00E1FD1D /* Managers */,
-				C34FC5022147EEE900EE76B6 /* CountriesTests.swift */,
 				C34FC5042147EEE900EE76B6 /* Info.plist */,
 			);
 			path = CountriesTests;
@@ -881,18 +878,18 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Countries/Pods-Countries-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -967,7 +964,6 @@
 			files = (
 				C354BC462200AF6800E1FD1D /* DetailCountryWorkerTests.swift in Sources */,
 				C354BC4B2200B4AC00E1FD1D /* ImageDownloadManagerTests.swift in Sources */,
-				C34FC5032147EEE900EE76B6 /* CountriesTests.swift in Sources */,
 				C35850642201B862005D9B67 /* CountryListRouterTests.swift in Sources */,
 				C3E2D64821FA2586001F645A /* CountryListPresenterTests.swift in Sources */,
 				C354BC3C220084B800E1FD1D /* DetailCountryInteractorTests.swift in Sources */,

@@ -10,7 +10,7 @@ target 'Countries' do
     pod 'RealmSwift'
     pod 'SDWebImage', '~> 4.0'
     pod 'Alamofire', '~> 4.7'
-    pod 'PKHUD', '~> 5.0'
+    pod 'SVProgressHUD'
 
   target 'CountriesTests' do
     inherit! :search_paths
