@@ -13,6 +13,10 @@ final class DetailCountryInteractor: DetailCountryBusinessLogic, DetailCountryDa
     
     // MARK: - Instance Properties
     
+    let ticketToCost: NSDecimalNumber = 7800
+    let ticketFromCost: NSDecimalNumber = 8900
+    let ticketSumCost: NSDecimalNumber = 16700
+    
     var presenter: DetailCountryPresentationLogic?
     var worker: DetailCountryWorkerProtocol = DetailCountryWorker()
     var country: CountryObject?
@@ -69,9 +73,9 @@ final class DetailCountryInteractor: DetailCountryBusinessLogic, DetailCountryDa
         request.countryCode = "RU"
         request.currencyCode = "RUB"
         
-        request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Ticket 1", amount: 1500),
-                                       PKPaymentSummaryItem(label: "Ticket 2", amount: 4500),
-                                       PKPaymentSummaryItem(label: "Tickets", amount: 6000)]
+        request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Билет в \(self.country?.capital ?? "")", amount: ticketToCost),
+                                       PKPaymentSummaryItem(label: "Билет из \(self.country?.capital ?? "")", amount: ticketFromCost),
+                                       PKPaymentSummaryItem(label: "Билеты ", amount: ticketSumCost)]
         
         let applePayController = PKPaymentAuthorizationController(paymentRequest: request)
         

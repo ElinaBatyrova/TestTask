@@ -1,6 +1,5 @@
 PODS:
   - Alamofire (4.7.3)
-  - PKHUD (5.1.0)
   - Realm (3.10.0):
     - Realm/Headers (= 3.10.0)
   - Realm/Headers (3.10.0)
@@ -9,28 +8,29 @@ PODS:
   - SDWebImage (4.4.2):
     - SDWebImage/Core (= 4.4.2)
   - SDWebImage/Core (4.4.2)
+  - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
-  - PKHUD (~> 5.0)
   - RealmSwift
   - SDWebImage (~> 4.0)
+  - SVProgressHUD
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
-    - PKHUD
     - Realm
     - RealmSwift
     - SDWebImage
+    - SVProgressHUD
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
-  PKHUD: 62ea46a1e88c4def1da784878d199bb54c841e3c
   Realm: 85ab9e4f779d66f6e9ffeb118dc25b7f130c96ac
   RealmSwift: 69121c8b86d0ae005fb779efdb10e606732e1c74
   SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: ebe2bde5e31871c36b891384bc303c182a88163d
+PODFILE CHECKSUM: fed039294aa70780ea1c29ee254072ab78c1c069
 
 COCOAPODS: 1.5.2
